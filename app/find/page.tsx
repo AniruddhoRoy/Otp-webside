@@ -15,7 +15,7 @@ import { SyncLoader } from "react-spinners";
 
 export default function Home() {
 
-    const {register , formState:{errors},handleSubmit , reset,watch} = useForm<z.infer< typeof findObjSchema> >({
+    const {register , formState:{errors},handleSubmit} = useForm<z.infer< typeof findObjSchema> >({
       defaultValues:{
         id:"",
         otp:"",
@@ -27,10 +27,14 @@ export default function Home() {
     const [secretText,setsecretText] = useState("")
     const [showOtpBox,setShowOtpBox] = useState(false)
     const [isLoading,setIsloading] = useState(false)
+    function normalizeString(input: string): string {
+      return input.replace(/\s+/g, '').toLowerCase();
+    }
     const onSubmutHandler:SubmitHandler<z.infer< typeof findObjSchema>> = (values)=>{
         
       setError("");
       setSuccess("");
+      values.id = normalizeString(values.id);
       setIsloading(true);
       if(!values.otp){
         send_otp(values.id).then((data)=>{

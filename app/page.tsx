@@ -22,12 +22,17 @@ export default function Home() {
       },
       resolver:zodResolver(createObjSchema)
     });
+    function normalizeString(input: string): string {
+      return input.replace(/\s+/g, '').toLowerCase();
+    }
     const [error,setError] = useState("")
     const [isLoading,setIsloading] = useState(false)
     const onSubmutHandler:SubmitHandler<z.infer< typeof createObjSchema>> = (values)=>{
       // console.log(values)
       setError("");
       setIsloading(true);
+      values.id = normalizeString(values.id);
+      // console.log(values.id)
       find_obj(values.id).then((data)=>{
         if(data){
           setError("😒 Id Not Available")
@@ -50,7 +55,7 @@ export default function Home() {
   return (
     <div className="h-full w-full flex flex-col justify-center items-center px-2">
       <form onSubmit={handleSubmit(onSubmutHandler)} className="w-full max-w-[400px] space-y-2  shadow-xl px-3 py-4 rounded-xl bg-zinc-50">
-        <h3>ID:</h3>
+        <h3>ID : <span className="text-red-400 text-sm font-semibold">[ No space ]</span></h3>
         <Input {...register("id")} disabled={isLoading}/>
         {errors.id && <p className="text-red-500 font-semibold">{errors.id.message}</p>}
         <h3>Email:</h3>
