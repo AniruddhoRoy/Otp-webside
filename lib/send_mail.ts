@@ -1,7 +1,7 @@
 "use server"
 import { Resend } from 'resend';
 
-const resend = new Resend("re_aDw4Jp7n_LuTbZEboMjU6P8XrYN695WzF");
+const resend = new Resend(process.env.RESED_PRIVATE_KEY);
 
 export async function  send_mail (subject:string,to:string,body:string){
     try{

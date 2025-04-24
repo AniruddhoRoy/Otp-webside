@@ -12,6 +12,7 @@ import { toast } from "sonner"
 import { send_otp } from "@/actions/send_otp";
 import { verify_otp } from "@/actions/verify_otp";
 import Link from "next/link";
+import { AlertDialogBox } from "@/components/custom/alertDialog";
 
 export default function Home() {
 
@@ -75,9 +76,13 @@ export default function Home() {
       <Button variant={"link"} type="button" className="text-blue-600 cursor-pointer">Create New encrypted text</Button>
         </Link>
         </div>
+        {secretText && <>
+        <div className="w-full text-center pt-2">
+        <AlertDialogBox heading="Secret Text" text={secretText}/>
+        </div>
+        </>}
         {error && <p className="text-red-500 font-semibold">{error}</p>}
         {success && <p className="text-green-500 font-semibold">{success}</p>}
-        {secretText && <p className="text-green-500 font-semibold">{secretText}</p>}
       </form>
     </div>
   );
